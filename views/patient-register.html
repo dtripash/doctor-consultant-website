@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Patient Registration</title>
+  <link rel="stylesheet" href="../public/css/style.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <h2>Patient Registration</h2>
+
+  <form action="/patient-register" method="POST">
+    <label>Full Name:</label><br>
+    <input type="text" name="name" required><br><br>
+
+    <label>Email:</label><br>
+    <input type="email" name="email" id="email" required><br><br>
+
+    <label>Password:</label><br>
+    <input type="password" name="password" required><br><br>
+
+    <label>Age:</label><br>
+    <input type="number" name="age" min="1" required><br><br>
+
+    <label>Gender:</label><br>
+    <select name="gender" required>
+      <option value="">--Select--</option>
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+      <option value="Other">Other</option>
+    </select><br><br>
+
+    <button type="submit">Register</button>
+  </form>
+
+  <p>Already have an account? <a href="patient-login.html">Login here</a></p>
+  <script>
+  document.querySelector("form").addEventListener("submit", function (e) {
+    const name = document.querySelector('input[name="name"]').value.trim();
+    const email = document.querySelector('input[name="email"]').value.trim();
+    const password = document.querySelector('input[name="password"]').value;
+    const age = parseInt(document.querySelector('input[name="age"]').value);
+    const gender = document.querySelector('select[name="gender"]').value;
+
+    if (!name || !email || !password || !age || !gender) {
+      alert("All fields are required!");
+      e.preventDefault();
+      return;
+    }
+
+    if (password.length < 6) {
+      alert("Password must be at least 6 characters!");
+      e.preventDefault();
+      return;
+    }
+
+    if (age <= 0) {
+      alert("Age must be a positive number!");
+      e.preventDefault();
+      return;
+    }
+  });
+</script>
+
+</body>
+</html>

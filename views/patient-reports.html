@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Patient Reports</title>
+  <link rel="stylesheet" href="/css/patient-reports.css">
+</head>
+<body>
+  <h2>Your Reports</h2>
+  <div class="dashboard">
+    <div class="reports-section" id="reports-container">
+      <!-- Reports will appear here -->
+    </div>
+
+    <div class="controls-section">
+      <a class="btn" href="questionnaire.html">New Consultation</a>
+      <button onclick="alert('Logging out...')">Logout</button>
+    </div>
+  </div>
+
+<script>
+  const container = document.getElementById('reports-container');
+
+    const email = localStorage.getItem("patientEmail");
+    fetch(`/api/consultations?email=${email}`)
+    
+    .then(res => res.json())
+    .then(consultations => {
+      if (consultations.length === 0) {
+        container.innerHTML = "<p>No consultations found.</p>";
+        return;
+      }
+
+      consultations.forEach(c => {
+        const date = new Date(c.createdAt).toLocaleDateString();
+        const div = document.createElement('div');
+        div.classList.add('report');
+        div.innerHTML = `
+          <div class="report-title">Consultation</div>
+          <div class="report-date">Date: ${date}</div>
+          <div class="report-content">
+            Duration: ${c.duration} <br>
+            Pain: ${c.pain} <br>
+            Consulted: ${c.consulted}
+          </div>
+          <hr>
+        `;
+        container.appendChild(div);
+      });
+    })
+    .catch(err => {
+      container.innerHTML = "<p>Error loading consultations.</p>";
+      console.error(err);
+    });
+</script>
+
+</body>
+</html>

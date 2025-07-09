@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Doctor Registration</title>
+  <link rel="stylesheet" href="../public/css/style.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <h2>Doctor Registration</h2>
+
+  <form action="/doctor-register" method="POST">
+    <label>Full Name:</label><br>
+    <input type="text" name="name" required><br><br>
+
+    <label>Email:</label><br>
+    <input type="email" name="email" required><br><br>
+
+    <label>Password:</label><br>
+    <input type="password" name="password" required><br><br>
+
+    <label>Specialization:</label><br>
+    <input type="text" name="specialization" required><br><br>
+
+    <label>Experience (Years):</label><br>
+    <input type="number" name="experience" min="0" max="50" required><br><br>
+
+    <button type="submit">Register</button>
+
+  </form>
+
+  <p>Already have an account? <a href="doctor-login.html">Login here</a></p>
+  <script>
+    document.querySelector("form").addEventListener("submit", function (e) {
+      const name = document.querySelector('input[name="name"]').value.trim();
+      const email = document.querySelector('input[name="email"]').value.trim();
+      const password = document.querySelector('input[name="password"]').value;
+      const specialization = document.querySelector('input[name="specialization"]').value.trim();
+      const experience = parseInt(document.querySelector('input[name="experience"]').value);
+
+      if (!name || !email || !password || !specialization || isNaN(experience)) {
+        alert("All fields are required!");
+        e.preventDefault();
+        return;
+      }
+
+      if (password.length < 6) {
+        alert("Password must be at least 6 characters!");
+        e.preventDefault();
+        return;
+      }
+
+      if (experience < 0 || experience > 50) {
+        alert("Experience must be between 0 and 50 years!");
+        e.preventDefault();
+        return;
+      }
+    });
+  </script>
+
+</body>
+
+</html>

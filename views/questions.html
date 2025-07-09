@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Health Questions</title>
+  <link rel="stylesheet" href="/css/form.css">
+</head>
+<body>
+  <h2 id="heading">Answer the following questions</h2>
+
+  <form action="/submit-questions" method="POST" class="question-form">
+    <label>1. How long have you been facing the issue?</label><br>
+    <input type="text" name="duration" required><br><br>
+
+    <label>2. Is there any pain involved?</label><br>
+    <select name="pain">
+      <option value="none">No</option>
+      <option value="mild">Mild</option>
+      <option value="severe">Severe</option>
+    </select><br><br>
+
+    <label>3. Have you consulted any doctor before?</label><br>
+    <input type="radio" name="consulted" value="yes" required> Yes
+    <input type="radio" name="consulted" value="no"> No<br><br>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const problem = params.get("problem");
+    if (problem) {
+      document.getElementById("heading").textContent += ` for ${problem}`;
+    }
+  </script>
+</body>
+</html>
