@@ -8,19 +8,19 @@
   <h2>Select the area of your problem</h2>
 
   <form onsubmit="return goNext()">
-    <label><input type="radio" name="problem" value="Skin"    required> Skin</label><br><br>
-    <label><input type="radio" name="problem" value="Lungs">   Lungs</label><br><br>
+    <label><input type="radio" name="problem" value="Skin" required> Skin</label><br><br>
+    <label><input type="radio" name="problem" value="Lungs"> Lungs</label><br><br>
     <label><input type="radio" name="problem" value="Stomach"> Stomach</label><br><br>
-    <label><input type="radio" name="problem" value="Other">   Other</label><br><br>
+    <label><input type="radio" name="problem" value="Other"> Other</label><br><br>
     <button type="submit">Next</button>
   </form>
 
   <script>
     function goNext() {
       const prob = document.querySelector("input[name=problem]:checked").value;
-      localStorage.setItem("problemArea", prob);          // save for next page
-      location.href = `questions.html`;
-      return false;
+      // ✅ Send selected problem as URL query parameter
+      location.href = `questions.html?problem=${encodeURIComponent(prob)}`;
+      return false; // prevent default form submit
     }
   </script>
 </body>

@@ -26,11 +26,24 @@
   </form>
 
   <script>
+    // ✅ Display problem from URL param
     const params = new URLSearchParams(window.location.search);
     const problem = params.get("problem");
     if (problem) {
       document.getElementById("heading").textContent += ` for ${problem}`;
     }
+
+    // ✅ Attach email from localStorage to form before submission
+    document.querySelector("form").addEventListener("submit", function(e) {
+      const email = localStorage.getItem("patientEmail");
+      if (email) {
+        const hiddenEmail = document.createElement("input");
+        hiddenEmail.type = "hidden";
+        hiddenEmail.name = "email";
+        hiddenEmail.value = email;
+        e.target.appendChild(hiddenEmail);
+      }
+    });
   </script>
 </body>
 </html>

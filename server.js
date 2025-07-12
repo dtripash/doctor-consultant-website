@@ -1,3 +1,4 @@
+// ✅ FINAL FIXED server.js (based on locked version)
 const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
@@ -12,14 +13,14 @@ mongoose.connect("mongodb://127.0.0.1:27017/amitdb")
   .then(() => console.log("✅ Connected to MongoDB"))
   .catch(err => console.error("❌ MongoDB connection failed:", err));
 
-// ✅ Consultation Schema & Model
+// ✅ Consultation Schema & Model (updated with email)
 const consultationSchema = new mongoose.Schema({
+  email: String,
   duration: String,
   pain: String,
   consulted: String,
   createdAt: { type: Date, default: Date.now }
 });
-
 const Consultation = mongoose.model("Consultation", consultationSchema);
 
 // ✅ Middleware
@@ -77,13 +78,13 @@ app.get("/doctor-dashboard.html", (req, res) => {
 });
 
 // ✅ Patient Registration
-app.post("/patient-register", async(req, res) => {
+app.post("/patient-register", async (req, res) => {
   const { name, email, password, age, gender } = req.body;
   try {
-    const exists = await Patient.findOne({email});
-    if (exists) return res.send("⚠️ Email already registered.")
+    const exists = await Patient.findOne({ email });
+    if (exists) return res.send("⚠️ Email already registered.");
 
-    const patient = new Patient({ name, email, password, age, gender});
+    const patient = new Patient({ name, email, password, age, gender });
     await patient.save();
     console.log("Patient Saved: ", patient);
     res.redirect("/questionnaire.html");
@@ -93,19 +94,23 @@ app.post("/patient-register", async(req, res) => {
   }
 });
 
-// Patient Login
-app.post("/patient-login", async (req, res) =>{
+// ✅ Patient Login (inject localStorage script)
+app.post("/patient-login", async (req, res) => {
   const { email, password } = req.body;
 
-  try{
+  try {
     const patient = await Patient.findOne({ email });
     if (!patient || patient.password !== password) {
       return res.send("Invalid email or password");
     }
     console.log("✅ Patient logged in: ", email);
-    res.redirect("/patient-dashboard.html");
-  }catch(err){
-    console.log("❌ Login error: " +err);
+    res.send(`<script>
+  localStorage.setItem('patientEmail', '${email}');
+  window.location.href='/patient-dashboard.html';
+</script>`);
+
+  } catch (err) {
+    console.log("❌ Login error: " + err);
     res.status(500).send("Server Error");
   }
 });
@@ -117,12 +122,12 @@ app.post("/doctor-register", (req, res) => {
   res.redirect("/doctor-dashboard.html");
 });
 
-// ✅ Submit Consultation (Question Form)
+// ✅ Submit Consultation (now saves email)
 app.post("/submit-questions", async (req, res) => {
-  const { duration, pain, consulted } = req.body;
+  const { email, duration, pain, consulted } = req.body;
 
   try {
-    const consultation = new Consultation({ duration, pain, consulted });
+    const consultation = new Consultation({ email, duration, pain, consulted });
     await consultation.save();
     console.log("✅ Consultation saved:", consultation);
     res.redirect("/response.html");
@@ -132,7 +137,7 @@ app.post("/submit-questions", async (req, res) => {
   }
 });
 
-// ✅ Get All Consultations (Reports)
+// ✅ Get All Consultations
 app.get("/api/consultations", async (req, res) => {
   try {
     const consultations = await Consultation.find().sort({ createdAt: -1 });

@@ -13,24 +13,26 @@
 
     <div class="controls-section">
       <a class="btn" href="questionnaire.html">New Consultation</a>
-      <button onclick="alert('Logging out...')">Logout</button>
+      <button onclick="logout()">Logout</button>
     </div>
   </div>
 
 <script>
   const container = document.getElementById('reports-container');
+  const email = localStorage.getItem("patientEmail");
 
-    const email = localStorage.getItem("patientEmail");
-    fetch(`/api/consultations?email=${email}`)
-    
+  fetch(`/api/consultations`)
     .then(res => res.json())
     .then(consultations => {
-      if (consultations.length === 0) {
+      // Filter consultations for the logged-in patient only
+      const myReports = consultations.filter(c => c.email === email);
+
+      if (myReports.length === 0) {
         container.innerHTML = "<p>No consultations found.</p>";
         return;
       }
 
-      consultations.forEach(c => {
+      myReports.forEach(c => {
         const date = new Date(c.createdAt).toLocaleDateString();
         const div = document.createElement('div');
         div.classList.add('report');
@@ -38,9 +40,10 @@
           <div class="report-title">Consultation</div>
           <div class="report-date">Date: ${date}</div>
           <div class="report-content">
-            Duration: ${c.duration} <br>
-            Pain: ${c.pain} <br>
-            Consulted: ${c.consulted}
+            <strong>Duration:</strong> ${c.duration} <br>
+            <strong>Pain:</strong> ${c.pain} <br>
+            <strong>Consulted:</strong> ${c.consulted} <br>
+            <strong>Email:</strong> ${c.email}
           </div>
           <hr>
         `;
@@ -51,6 +54,11 @@
       container.innerHTML = "<p>Error loading consultations.</p>";
       console.error(err);
     });
+    function logout() {
+    localStorage.clear();
+    alert("Logged out!");
+    location.href = "patient-login.html";
+  }
 </script>
 
 </body>

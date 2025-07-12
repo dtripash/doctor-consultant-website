@@ -24,8 +24,15 @@
     <div class="actions">
       <a href="questionnaire.html" class="btn">📝 New Consultation</a>
       <a href="patient-reports.html" class="btn">📄 View Reports</a>
-      <button onclick="alert('Logging out...')" class="btn logout">🚪 Logout</button>
+      <button onclick="logout()" class="btn logout">🚪 Logout</button>
     </div>
   </div>
+  <script>
+  function logout() {
+    localStorage.clear();
+    alert("Logged out!");
+    location.href = "patient-login.html";
+  }
+</script>
 </body>
 </html>
