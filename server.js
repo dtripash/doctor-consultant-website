@@ -116,11 +116,43 @@ app.post("/patient-login", async (req, res) => {
 });
 
 // ✅ Doctor Registration
-app.post("/doctor-register", (req, res) => {
+app.post("/doctor-register", async (req, res) => {
   const { name, email, password, specialization, experience } = req.body;
-  console.log("📥 Doctor Registered:", { name, email, password, specialization, experience });
-  res.redirect("/doctor-dashboard.html");
+  try {
+    const exists = await Doctor.findOne({ email });
+    if(exists) return res.send("⚠️ Doctor already registered.");
+    const doctor = new Doctor({ name, email, password, specialization, experience });
+    await doctor.save();
+    console.log("✅ Doctor Registered:", doctor);
+    res.send(`<script>
+      localStorage.setItem('doctorEmail', '${email}');
+      window.location.href = '/doctor-dashboard.html';
+    </script>`);
+  } catch (err) {
+    console.error("❌ Doctor register error:", err);
+    res.status(500).send("Server error");
+  }
 });
+
+app.post("/doctor-login", async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const doctor = await Doctor.findOne({ email });
+    if (!doctor || doctor.password !== password) {
+      return res.send("Invalid doctor credentials.");
+    }
+
+    console.log("✅ Doctor logged in:", doctor.email);
+    res.send(`<script>
+      localStorage.setItem('doctorEmail', '${email}');
+      window.location.href = '/doctor-dashboard.html';
+    </script>`);
+  } catch (err) {
+    console.error("❌ Doctor login error:", err);
+    res.status(500).send("Server error");
+  }
+});
+
 
 // ✅ Submit Consultation (now saves email)
 app.post("/submit-questions", async (req, res) => {

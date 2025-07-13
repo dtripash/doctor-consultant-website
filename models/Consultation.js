@@ -1,11 +1,11 @@
-// ✅ FINAL FIXED Consultation.js
 const mongoose = require("mongoose");
 
 const consultationSchema = new mongoose.Schema({
-  email: String, // ✅ links consultation to the correct patient
+  email: String,
   duration: String,
   pain: String,
   consulted: String,
+  feedback: { type: String, default: "Pending" }, // ✅ NEW
   createdAt: { type: Date, default: Date.now }
 });
 

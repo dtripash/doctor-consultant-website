@@ -10,10 +10,56 @@
 
   <div class="dashboard">
     <p><strong>Specialization:</strong> [Your Specialization]</p>
-    <p><strong>New Consultations:</strong> 3 patients waiting</p>
+    <div id="consultations-container">
+      <p>Loading consultations...</p>
+    </div>
 
+    <br>
     <button onclick="alert('Viewing patient queries...')">View Patient Queries</button>
-    <button onclick="alert('Logging out...')">Logout</button>
+    <button onclick="logout()">Logout</button>
   </div>
+
+  <script>
+    const doctorEmail = localStorage.getItem("doctorEmail");
+    const container = document.getElementById("consultations-container");
+
+    fetch("/api/consultations")
+      .then(res => res.json())
+      .then(data => {
+        if (data.length === 0) {
+          container.innerHTML = "<p>No consultations found.</p>";
+          return;
+        }
+
+        container.innerHTML = ""; // Clear loading text
+
+        data.forEach(c => {
+          const date = new Date(c.createdAt).toLocaleString();
+          const div = document.createElement("div");
+          div.classList.add("consultation");
+          div.innerHTML = `
+            <hr>
+            <h4>🧍 Patient: ${c.email}</h4>
+            <p><strong>Date:</strong> ${date}</p>
+            <p><strong>Duration:</strong> ${c.duration}</p>
+            <p><strong>Pain:</strong> ${c.pain}</p>
+            <p><strong>Consulted Before:</strong> ${c.consulted}</p>
+            <p><strong>Feedback:</strong> ${c.feedback || "Pending"}</p>
+          `;
+          container.appendChild(div);
+        });
+      })
+      .catch(err => {
+        console.error("❌ Consultation load error:", err);
+        container.innerHTML = "<p>Error loading consultations.</p>";
+      });
+
+    function logout() {
+      localStorage.clear();
+      alert("Logged out!");
+      location.href = "doctor-login.html";
+    }
+  </script>
 </body>
+
 </html>
