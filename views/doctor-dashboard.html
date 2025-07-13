@@ -5,11 +5,13 @@
   <link rel="stylesheet" href="/css/doctor-dashboard.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 </head>
+
 <body>
-  <h2>Welcome, Doctor!</h2>
+  <h2 id="welcome-heading">Welcome, Doctor!</h2>
 
   <div class="dashboard">
-    <p><strong>Specialization:</strong> [Your Specialization]</p>
+    <p><strong>Your Specialization:</strong> <span id="specialization">Loading...</span></p>
+
     <div id="consultations-container">
       <p>Loading consultations...</p>
     </div>
@@ -23,6 +25,7 @@
     const doctorEmail = localStorage.getItem("doctorEmail");
     const container = document.getElementById("consultations-container");
 
+    // ✅ Fetch all consultations
     fetch("/api/consultations")
       .then(res => res.json())
       .then(data => {
@@ -39,7 +42,7 @@
           div.classList.add("consultation");
           div.innerHTML = `
             <hr>
-            <h4>🧍 Patient: ${c.email}</h4>
+            <h4>Patient Email: ${c.email}</h4>
             <p><strong>Date:</strong> ${date}</p>
             <p><strong>Duration:</strong> ${c.duration}</p>
             <p><strong>Pain:</strong> ${c.pain}</p>
@@ -54,6 +57,19 @@
         container.innerHTML = "<p>Error loading consultations.</p>";
       });
 
+    // ✅ Fetch doctor profile to show name + specialization
+    fetch(`/api/doctor-profile?email=${encodeURIComponent(doctorEmail)}`)
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("specialization").textContent = data.specialization;
+        document.getElementById("welcome-heading").textContent = `Welcome, Dr. ${data.name}!`;
+      })
+      .catch(err => {
+        console.error("❌ Error loading doctor profile:", err);
+        document.getElementById("specialization").textContent = "Unknown";
+      });
+
+    // ✅ Logout
     function logout() {
       localStorage.clear();
       alert("Logged out!");
@@ -61,5 +77,4 @@
     }
   </script>
 </body>
-
 </html>

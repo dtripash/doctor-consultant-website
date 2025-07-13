@@ -136,23 +136,24 @@ app.post("/doctor-register", async (req, res) => {
 
 app.post("/doctor-login", async (req, res) => {
   const { email, password } = req.body;
+
   try {
     const doctor = await Doctor.findOne({ email });
     if (!doctor || doctor.password !== password) {
-      return res.send("Invalid doctor credentials.");
+      return res.send("Invalid email or password");
     }
 
-    console.log("✅ Doctor logged in:", doctor.email);
+    // ✅ Set doctorEmail in localStorage
     res.send(`<script>
       localStorage.setItem('doctorEmail', '${email}');
-      window.location.href = '/doctor-dashboard.html';
+      window.location.href='/doctor-dashboard.html';
     </script>`);
+
   } catch (err) {
     console.error("❌ Doctor login error:", err);
-    res.status(500).send("Server error");
+    res.status(500).send("Server Error");
   }
 });
-
 
 // ✅ Submit Consultation (now saves email)
 app.post("/submit-questions", async (req, res) => {
@@ -179,6 +180,23 @@ app.get("/api/consultations", async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
+
+app.get("/api/doctor-profile", async (req, res) => {
+  const { email } = req.query;
+  try {
+    const doctor = await Doctor.findOne({ email });
+    if (!doctor) return res.status(404).json({ error: "Doctor not found" });
+
+    res.json({
+      name: doctor.name,
+      specialization: doctor.specialization,
+      experience: doctor.experience
+    });
+  } catch (err) {
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 
 // ✅ Start Server
 app.listen(PORT, () => {
