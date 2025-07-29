@@ -26,24 +26,36 @@
   </form>
 
   <script>
-    // ✅ Display problem from URL param
     const params = new URLSearchParams(window.location.search);
-    const problem = params.get("problem");
-    if (problem) {
-      document.getElementById("heading").textContent += ` for ${problem}`;
-    }
+const problem = params.get("problem");
 
-    // ✅ Attach email from localStorage to form before submission
-    document.querySelector("form").addEventListener("submit", function(e) {
-      const email = localStorage.getItem("patientEmail");
-      if (email) {
-        const hiddenEmail = document.createElement("input");
-        hiddenEmail.type = "hidden";
-        hiddenEmail.name = "email";
-        hiddenEmail.value = email;
-        e.target.appendChild(hiddenEmail);
-      }
-    });
+// Optional: display
+if (problem) {
+  document.getElementById("heading").textContent += ` for ${problem}`;
+  // ✅ Save in localStorage for later
+  localStorage.setItem("problemType", problem);
+}
+
+document.querySelector("form").addEventListener("submit", function(e) {
+  const email = localStorage.getItem("patientEmail");
+  if (email) {
+    const hiddenEmail = document.createElement("input");
+    hiddenEmail.type = "hidden";
+    hiddenEmail.name = "email";
+    hiddenEmail.value = email;
+    e.target.appendChild(hiddenEmail);
+  }
+
+  const storedProblem = localStorage.getItem("problemType");
+  if (storedProblem) {
+    const hiddenProblem = document.createElement("input");
+    hiddenProblem.type = "hidden";
+    hiddenProblem.name = "problemType";
+    hiddenProblem.value = storedProblem;
+    e.target.appendChild(hiddenProblem);
+  }
+});
+
   </script>
 </body>
 </html>

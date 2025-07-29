@@ -18,9 +18,13 @@
   <script>
     function goNext() {
       const prob = document.querySelector("input[name=problem]:checked").value;
-      // ✅ Send selected problem as URL query parameter
+
+      // ✅ Save to localStorage
+      localStorage.setItem("problemType", prob);
+
+      // ✅ Optional: Pass in URL
       location.href = `questions.html?problem=${encodeURIComponent(prob)}`;
-      return false; // prevent default form submit
+      return false;
     }
   </script>
 </body>

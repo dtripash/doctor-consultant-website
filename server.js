@@ -3,6 +3,7 @@ const path = require("path");
 const mongoose = require("mongoose");
 const Patient = require("./models/Patient");
 const Doctor = require("./models/Doctor");
+const Consultation = require("./models/Consultation");
 
 const app = express();
 const PORT = 3000;
@@ -13,14 +14,14 @@ mongoose.connect("mongodb://127.0.0.1:27017/amitdb")
   .catch(err => console.error("❌ MongoDB connection failed:", err));
 
 // Consultation Schema & Model (updated with email)
-const consultationSchema = new mongoose.Schema({
-  email: String,
-  duration: String,
-  pain: String,
-  consulted: String,
-  createdAt: { type: Date, default: Date.now }
-});
-const Consultation = mongoose.model("Consultation", consultationSchema);
+// const consultationSchema = new mongoose.Schema({
+//   email: String,
+//   duration: String,
+//   pain: String,
+//   consulted: String,
+//   createdAt: { type: Date, default: Date.now }
+// });
+// const Consultation = mongoose.model("Consultation", consultationSchema);
 
 // Middleware
 app.use(express.urlencoded({ extended: true }));
@@ -156,10 +157,10 @@ app.post("/doctor-login", async (req, res) => {
 
 // Submit Consultation (now saves email)
 app.post("/submit-questions", async (req, res) => {
-  const { email, duration, pain, consulted } = req.body;
+  const { email, duration, pain, consulted, problemType } = req.body;
 
   try {
-    const consultation = new Consultation({ email, duration, pain, consulted });
+    const consultation = new Consultation({ email, duration, pain, consulted, problemType });
     await consultation.save();
     console.log("✅ Consultation saved:", consultation);
     res.redirect("/response.html");

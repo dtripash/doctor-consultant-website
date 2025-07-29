@@ -5,6 +5,7 @@ const consultationSchema = new mongoose.Schema({
   duration: String,
   pain: String,
   consulted: String,
+  problemType: String,
   feedback: { type: String, default: "Pending" }, // ✅ NEW
   createdAt: { type: Date, default: Date.now }
 });
