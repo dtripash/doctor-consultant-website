@@ -44,7 +44,9 @@
             <strong>Duration:</strong> ${c.duration} <br>
             <strong>Pain:</strong> ${c.pain} <br>
             <strong>Consulted:</strong> ${c.consulted} <br>
-            <strong>Email:</strong> ${c.email}
+            <strong>Email:</strong> ${c.email} <br><br>
+            <strong style="color:green;">Doctor's Feedback:</strong> ${c.feedback || "Pending"} <br>
+            <strong style="color:blue;">Prescription:</strong> ${c.prescription || "Not Given"}
           </div>
           <hr>
         `;

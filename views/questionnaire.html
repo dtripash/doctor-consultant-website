@@ -19,10 +19,10 @@
     function goNext() {
       const prob = document.querySelector("input[name=problem]:checked").value;
 
-      // ✅ Save to localStorage
+      // Save to localStorage
       localStorage.setItem("problemType", prob);
 
-      // ✅ Optional: Pass in URL
+      // Optional: Pass in URL
       location.href = `questions.html?problem=${encodeURIComponent(prob)}`;
       return false;
     }

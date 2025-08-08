@@ -10,8 +10,8 @@ const PORT = 3000;
 
 // MongoDB Connection
 mongoose.connect("mongodb://127.0.0.1:27017/amitdb")
-  .then(() => console.log("✅ Connected to MongoDB"))
-  .catch(err => console.error("❌ MongoDB connection failed:", err));
+  .then(() => console.log("Connected to MongoDB"))
+  .catch(err => console.error("MongoDB connection failed:", err));
 
 // Consultation Schema & Model (updated with email)
 // const consultationSchema = new mongoose.Schema({
@@ -89,7 +89,7 @@ app.post("/patient-register", async (req, res) => {
     console.log("Patient Saved: ", patient);
     res.redirect("/questionnaire.html");
   } catch (err) {
-    console.log("❌ Registration error:", err);
+    console.log("Registration error:", err);
     res.status(500).send("Server error");
   }
 });
@@ -103,7 +103,7 @@ app.post("/patient-login", async (req, res) => {
     if (!patient || patient.password !== password) {
       return res.send("Invalid email or password");
     }
-    console.log("✅ Patient logged in: ", email);
+    console.log("Patient logged in: ", email);
     res.send(`<script>
     localStorage.setItem('patientEmail', '${email}');
     window.location.href='/patient-dashboard.html';
@@ -120,10 +120,10 @@ app.post("/doctor-register", async (req, res) => {
   const { name, email, password, specialization, experience } = req.body;
   try {
     const exists = await Doctor.findOne({ email });
-    if(exists) return res.send("⚠️ Doctor already registered.");
+    if(exists) return res.send(" Doctor already registered.");
     const doctor = new Doctor({ name, email, password, specialization, experience });
     await doctor.save();
-    console.log("✅ Doctor Registered:", doctor);
+    console.log("Doctor Registered:", doctor);
     res.send(`<script>
       localStorage.setItem('doctorEmail', '${email}');
       window.location.href = '/doctor-dashboard.html';
@@ -150,8 +150,26 @@ app.post("/doctor-login", async (req, res) => {
     </script>`);
 
   } catch (err) {
-    console.error("❌ Doctor login error:", err);
+    console.error("Doctor login error:", err);
     res.status(500).send("Server Error");
+  }
+});
+
+app.post("/submit-feedback", async (req, res) => {
+  const { reportId, feedback, prescription } = req.body;
+
+  try {
+    await Consultation.findByIdAndUpdate(reportId, {
+      feedback: feedback,
+      prescription: prescription
+    });
+
+    console.log(`Feedback submitted for report ${reportId}`);
+    res.redirect("/doctor-dashboard.html");
+    // Or: res.redirect("/doctor-dashboard.html");
+  } catch (err) {
+    console.error("❌ Feedback submission error:", err);
+    res.status(500).send("Error saving feedback.");
   }
 });
 
@@ -162,10 +180,10 @@ app.post("/submit-questions", async (req, res) => {
   try {
     const consultation = new Consultation({ email, duration, pain, consulted, problemType });
     await consultation.save();
-    console.log("✅ Consultation saved:", consultation);
+    console.log("Consultation saved:", consultation);
     res.redirect("/response.html");
   } catch (err) {
-    console.error("❌ Save error:", err);
+    console.error("Save error:", err);
     res.status(500).send("Server error.");
   }
 });
@@ -176,7 +194,7 @@ app.get("/api/consultations", async (req, res) => {
     const consultations = await Consultation.find().sort({ createdAt: -1 });
     res.json(consultations);
   } catch (err) {
-    console.error("❌ Fetch error:", err);
+    console.error("Fetch error:", err);
     res.status(500).json({ error: "Server error" });
   }
 });
@@ -199,5 +217,5 @@ app.get("/api/doctor-profile", async (req, res) => {
 
 // Start Server
 app.listen(PORT, () => {
-  console.log(`🚀 Server running at http://localhost:${PORT}`);
+  console.log(`Server running at http://localhost:${PORT}`);
 });
