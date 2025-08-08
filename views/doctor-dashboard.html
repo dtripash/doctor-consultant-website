@@ -67,6 +67,8 @@
     <p><strong>Name:</strong> <span id="doctorName"></span></p>
     <p><strong>Specialization:</strong> <span id="doctorSpecialization"></span></p>
     <p><strong>Experience:</strong> <span id="doctorExperience"></span> years</p>
+    <button onclick="logout()" class="logout-btn">Logout</button>
+    <hr>
   </div>
 
   <!-- Patient Reports -->
@@ -74,6 +76,10 @@
   <div id="reports"></div>
 
   <script>
+    function logout() {
+      localStorage.removeItem("doctorEmail");
+      window.location.href = "doctor-login.html";
+    }
     // Check if doctor is logged in
     const doctorEmail = localStorage.getItem("doctorEmail");
     if (!doctorEmail) {

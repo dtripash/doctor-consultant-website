@@ -77,6 +77,7 @@ app.get("/doctor-dashboard.html", (req, res) => {
   res.sendFile(path.join(__dirname, "views", "doctor-dashboard.html"));
 });
 
+
 // Patient Registration
 app.post("/patient-register", async (req, res) => {
   const { name, email, password, age, gender } = req.body;

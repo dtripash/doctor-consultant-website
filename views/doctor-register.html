@@ -1,36 +1,35 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <title>Doctor Registration</title>
-  <link rel="stylesheet" href="../public/css/style.css">
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/register.css" />
 </head>
-
 <body>
-  <h2>Doctor Registration</h2>
+  <div class="container">
+    <h2>Doctor Registration</h2>
 
-  <form action="/doctor-register" method="POST">
-    <label>Full Name:</label><br>
-    <input type="text" name="name" required><br><br>
+    <form action="/doctor-register" method="POST">
+      <label>Full Name:</label>
+      <input type="text" name="name" required />
 
-    <label>Email:</label><br>
-    <input type="email" name="email" required><br><br>
+      <label>Email:</label>
+      <input type="email" name="email" required />
 
-    <label>Password:</label><br>
-    <input type="password" name="password" required><br><br>
+      <label>Password:</label>
+      <input type="password" name="password" required />
 
-    <label>Specialization:</label><br>
-    <input type="text" name="specialization" required><br><br>
+      <label>Specialization:</label>
+      <input type="text" name="specialization" required />
 
-    <label>Experience (Years):</label><br>
-    <input type="number" name="experience" min="0" max="50" required><br><br>
+      <label>Experience (Years):</label>
+      <input type="number" name="experience" min="0" max="50" required />
 
-    <button type="submit">Register</button>
+      <button type="submit">Register</button>
+    </form>
 
-  </form>
+    <p>Already have an account? <a href="doctor-login.html">Login here</a></p>
+  </div>
 
-  <p>Already have an account? <a href="doctor-login.html">Login here</a></p>
   <script>
     document.querySelector("form").addEventListener("submit", function (e) {
       const name = document.querySelector('input[name="name"]').value.trim();
@@ -58,7 +57,5 @@
       }
     });
   </script>
-
 </body>
-
 </html>

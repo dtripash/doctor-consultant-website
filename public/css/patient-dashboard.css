@@ -1,69 +1,114 @@
+/* public/css/patient-dashboard.css */
+
 body {
-  font-family: 'Poppins', sans-serif;
-  background: #f5f8ff;
   margin: 0;
-  padding: 20px;
+  padding: 0;
+  background: #f0f4f8;
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  color: #34495e;
 }
 
 .dashboard-container {
-  max-width: 800px;
-  margin: auto;
+  background: #fff;
+  padding: 40px 50px;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+  max-width: 500px;
+  width: 100%;
   text-align: center;
 }
 
 h1 {
-  color: #2c3e50;
+  font-weight: 700;
+  font-size: 2.4rem;
   margin-bottom: 30px;
+  color: #2c3e50;
 }
 
 .info-section {
   display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
+  justify-content: space-between;
   gap: 20px;
   margin-bottom: 40px;
+  flex-wrap: wrap;
 }
 
 .card {
-  background: #fff;
-  padding: 20px;
+  background: #f7f9fc;
+  flex: 1 1 45%;
+  padding: 25px 20px;
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  flex: 1 1 300px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+  color: #34495e;
 }
 
 .card h3 {
-  margin-bottom: 10px;
-  color: #0077cc;
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+  color: #1a1a1a;
+}
+
+.card p {
+  font-size: 1rem;
+  color: #7f8c8d;
 }
 
 .actions {
   display: flex;
-  flex-direction: column;
-  gap: 15px;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
 .btn {
-  background-color: #3498db;
+  background-color: #27ae60; /* green */
   color: white;
-  padding: 14px;
   text-decoration: none;
-  font-size: 16px;
-  border-radius: 8px;
-  transition: background-color 0.3s ease;
-  border: none;
-  display: inline-block;
+  padding: 14px 28px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 1.1rem;
   cursor: pointer;
+  border: none;
+  transition: background-color 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .btn:hover {
-  background-color: #2980b9;
+  background-color: #1e8449;
 }
 
 .logout {
-  background-color: #e74c3c;
+  background-color: #e74c3c; /* red */
 }
 
 .logout:hover {
   background-color: #c0392b;
+}
+
+/* Responsive for small screens */
+@media (max-width: 480px) {
+  .info-section {
+    flex-direction: column;
+  }
+  
+  .card {
+    flex: 1 1 100%;
+  }
+  
+  .actions {
+    flex-direction: column;
+  }
+  
+  .btn {
+    width: 100%;
+  }
 }

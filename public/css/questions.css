@@ -1,0 +1,83 @@
+/* questions.css */
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8fafc;
+  margin: 0;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  color: #2c3e50;
+}
+
+h2#heading {
+  font-weight: 700;
+  font-size: 2rem;
+  margin-bottom: 30px;
+  text-align: center;
+  color: #34495e;
+}
+
+.question-form {
+  background: #fff;
+  padding: 30px 35px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  max-width: 450px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.question-form label {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #34495e;
+  display: block;
+  margin-bottom: 8px;
+  margin-top: 15px;
+}
+
+.question-form input[type="text"],
+.question-form select {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 1rem;
+  border: 1.5px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.question-form input[type="text"]:focus,
+.question-form select:focus {
+  border-color: #28a745; /* green */
+  outline: none;
+  box-shadow: 0 0 8px rgba(40, 167, 69, 0.3);
+}
+
+.question-form input[type="radio"] {
+  margin-left: 10px;
+  margin-right: 4px;
+  accent-color: #28a745;
+  cursor: pointer;
+}
+
+.question-form button {
+  width: 100%;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  padding: 14px 0;
+  margin-top: 25px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.question-form button:hover {
+  background-color: #1e7e34;
+}

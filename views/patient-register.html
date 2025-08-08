@@ -2,42 +2,43 @@
 <html>
 <head>
   <title>Patient Registration</title>
-  <link rel="stylesheet" href="../public/css/style.css">
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/register.css" />
 </head>
 <body>
-  <h2>Patient Registration</h2>
+  <div class="container">
+    <h2>Patient Registration</h2>
 
-  <form action="/patient-register" method="POST">
-    <label>Full Name:</label><br>
-    <input type="text" name="name" required><br><br>
+    <form action="/patient-register" method="POST">
+      <label>Full Name:</label>
+      <input type="text" name="name" required />
 
-    <label>Email:</label><br>
-    <input type="email" name="email" id="email" required><br><br>
+      <label>Email:</label>
+      <input type="email" name="email" id="email" required />
 
-    <label>Password:</label><br>
-    <input type="password" name="password" required><br><br>
+      <label>Password:</label>
+      <input type="password" name="password" required />
 
-    <label>Age:</label><br>
-    <input type="number" name="age" min="1" required><br><br>
+      <label>Age:</label>
+      <input type="number" name="age" min="1" required />
 
-    <label>Gender:</label><br>
-    <select name="gender" required>
-      <option value="">--Select--</option>
-      <option value="Male">Male</option>
-      <option value="Female">Female</option>
-      <option value="Other">Other</option>
-    </select><br><br>
+      <label>Gender:</label>
+      <select name="gender" required>
+        <option value="">--Select--</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+      </select>
 
-    <button type="submit">Register</button>
-  </form>
+      <button type="submit">Register</button>
+    </form>
 
-  <p>Already have an account? <a href="patient-login.html">Login here</a></p>
+    <p>Already have an account? <a href="patient-login.html">Login here</a></p>
+  </div>
 
   <script>
     document.querySelector("form").addEventListener("submit", function (e) {
       const email = document.getElementById("email").value.trim();
-      localStorage.setItem("patientEmail", email); // ✅ Important fix
+      localStorage.setItem("patientEmail", email);
 
       const name = document.querySelector('input[name="name"]').value.trim();
       const password = document.querySelector('input[name="password"]').value;
