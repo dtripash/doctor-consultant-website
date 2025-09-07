@@ -2,57 +2,90 @@ body {
   font-family: 'Segoe UI', sans-serif;
   background-color: #e8f4f8;
   text-align: center;
-  padding-top: 50px;
+  padding: 40px 15px;
 }
 
 h2 {
   color: #2c3e50;
+  margin-bottom: 20px;
 }
 
 form {
   display: inline-block;
   background-color: white;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  max-width: 500px;
+  width: 100%;
 }
 
 label {
-  font-size: 18px;
+  font-size: 16px;
   display: block;
-  margin-bottom: 10px;
+  margin: 12px 0 6px;
+  text-align: left;
+}
+
+input[type="text"],
+select {
+  width: 100%;
+  padding: 10px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  transition: border 0.2s;
+}
+
+input[type="text"]:focus,
+select:focus {
+  border: 1px solid #3498db;
 }
 
 button {
-  padding: 10px 20px;
+  padding: 12px 20px;
   font-size: 16px;
   margin-top: 20px;
-  background-color: #3498db;
+  background-color: #2ecc71; /* Green instead of blue */
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
-.inline-options {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
+
+button:hover {
+  background-color: #27ae60;
 }
 
 .inline-options {
   display: flex;
-  justify-content: center;
-  gap: 80px; /* spacing between Lungs and Stomach */
-  align-items: center;
+  justify-content: space-between;
+  margin: 15px 0;
 }
 
 .inline-options label {
-  font-size: 18px;
+  font-size: 15px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  cursor: pointer;
 }
 
-.container{
-    float: left;
+/* Responsive for mobile */
+@media (max-width: 600px) {
+  form {
+    padding: 20px;
+  }
+
+  .inline-options {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  button {
+    width: 100%;
+  }
 }

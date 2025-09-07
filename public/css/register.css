@@ -1,5 +1,6 @@
 /* public/css/register.css */
 
+/* Base styles */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: #f9f9f9;
@@ -26,7 +27,6 @@ body {
 .container p {
   width: 100%; /* full width inside container */
 }
-
 
 h2 {
   color: #444;
@@ -110,4 +110,64 @@ p a {
 
 p a:hover {
   text-decoration: underline;
+}
+
+/* --------------------
+   Responsive Styling
+--------------------- */
+
+/* Tablets */
+@media (max-width: 768px) {
+  h2 {
+    font-size: 1.7rem;
+    margin-bottom: 25px;
+  }
+
+  form {
+    padding: 30px 25px;
+  }
+
+  input,
+  select {
+    padding: 10px 12px;
+    font-size: 0.95rem;
+  }
+
+  button {
+    padding: 12px 0;
+    font-size: 1rem;
+  }
+}
+
+/* Mobiles */
+@media (max-width: 480px) {
+  body {
+    padding: 10px;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+  }
+
+  form {
+    padding: 20px 15px;
+    border-radius: 8px;
+  }
+
+  input,
+  select {
+    padding: 8px 10px;
+    font-size: 0.9rem;
+  }
+
+  button {
+    padding: 10px 0;
+    font-size: 0.95rem;
+    border-radius: 8px;
+  }
+
+  p {
+    font-size: 0.85rem;
+  }
 }

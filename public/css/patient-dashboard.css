@@ -94,21 +94,56 @@ h1 {
   background-color: #c0392b;
 }
 
-/* Responsive for small screens */
+/* 📱 Mobile screens */
 @media (max-width: 480px) {
+  .dashboard-container {
+    padding: 25px 20px;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+
   .info-section {
     flex-direction: column;
+    gap: 15px;
   }
-  
+
   .card {
     flex: 1 1 100%;
+    padding: 20px;
   }
-  
+
   .actions {
     flex-direction: column;
+    gap: 15px;
   }
-  
+
   .btn {
     width: 100%;
+    padding: 12px 0;
+    font-size: 1rem;
+  }
+}
+
+/* 📲 Tablets and small laptops */
+@media (max-width: 768px) {
+  .dashboard-container {
+    max-width: 90%;
+    padding: 30px 25px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .info-section {
+    gap: 15px;
+  }
+
+  .btn {
+    padding: 12px 20px;
+    font-size: 1rem;
   }
 }

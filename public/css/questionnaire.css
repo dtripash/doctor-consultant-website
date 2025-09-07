@@ -69,3 +69,37 @@ button {
 button:hover {
   background-color: #1e7e34;
 }
+
+/* 📱 Mobile screens */
+@media (max-width: 480px) {
+  body {
+    padding: 20px 10px;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+  }
+
+  form {
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+  }
+
+  label {
+    font-size: 1rem;
+    margin-bottom: 15px;
+    gap: 8px;
+  }
+
+  input[type="radio"] {
+    width: 18px;
+    height: 18px;
+  }
+
+  button {
+    font-size: 1rem;
+    padding: 12px 0;
+  }
+}

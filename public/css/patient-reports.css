@@ -126,7 +126,7 @@ h2 {
   background-color: #1f7a43;
 }
 
-/* Responsive for smaller screens */
+/* 📲 Tablet screens */
 @media (max-width: 768px) {
   .dashboard {
     flex-direction: column;
@@ -135,6 +135,7 @@ h2 {
   .controls-section {
     flex-direction: row;
     justify-content: center;
+    gap: 15px;
   }
   
   .controls-section .btn,
@@ -142,5 +143,56 @@ h2 {
     width: auto;
     padding: 12px 25px;
     font-size: 1rem;
+  }
+}
+
+/* 📱 Small mobiles */
+@media (max-width: 480px) {
+  body {
+    padding: 20px 10px;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+  }
+
+  .reports-section {
+    padding: 18px 15px;
+    max-height: none; /* allow full scroll */
+  }
+
+  .report {
+    padding: 14px 16px;
+  }
+
+  .report-title {
+    font-size: 1rem;
+  }
+
+  .report-date {
+    font-size: 0.8rem;
+  }
+
+  .report-content {
+    font-size: 0.9rem;
+  }
+
+  .report-content strong {
+    width: 100%; /* stack labels above */
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .controls-section {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .controls-section .btn,
+  .controls-section button {
+    width: 100%;
+    font-size: 1rem;
+    padding: 12px 0;
   }
 }
