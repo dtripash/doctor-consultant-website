@@ -62,18 +62,30 @@ app.post("/patient-login", async (req, res) => {
   try {
     const patient = await Patient.findOne({ email });
     if (!patient || patient.password !== password) {
-      return res.send("Invalid email or password");
+      return res.send(`
+        <script>
+          alert("Invalid email or password");
+          window.location.href = "/patient-login.html";
+        </script>
+      `);
     }
     console.log("✅ Patient Logged In:", patient);
-    res.send(`<script>
-      localStorage.setItem('patientEmail', '${email}');
-      window.location.href='/patient-dashboard.html';
-    </script>`);
+    res.send(`
+  <script>
+    localStorage.setItem('patientName', '${patient.name}');
+    localStorage.setItem('patientEmail', '${patient.email}');
+    localStorage.setItem('patientAge', '${patient.age}');
+    localStorage.setItem('patientGender', '${patient.gender}');
+    window.location.href='/patient-reports.html';
+  s</script>
+  `);
+
   } catch (err) {
     console.error("❌ Login error:", err);
     res.status(500).send("Server Error");
   }
 });
+
 
 // Doctor Registration
 app.post("/doctor-register", async (req, res) => {
@@ -94,24 +106,32 @@ app.post("/doctor-register", async (req, res) => {
   }
 });
 
+// Hardcoded doctor credentials
+const FIXED_DOCTOR_EMAIL = "doctor@gmail.com";
+const FIXED_DOCTOR_PASSWORD = "doctor123";
+
 // Doctor Login
-app.post("/doctor-login", async (req, res) => {
+app.post("/doctor-login", (req, res) => {
   const { email, password } = req.body;
-  try {
-    const doctor = await Doctor.findOne({ email });
-    if (!doctor || doctor.password !== password) {
-      return res.send("Invalid email or password");
-    }
-    console.log("✅ Doctor Logged In:", doctor);
-    res.send(`<script>
-      localStorage.setItem('doctorEmail', '${email}');
-      window.location.href='/doctor-dashboard.html';
-    </script>`);
-  } catch (err) {
-    console.error("❌ Doctor login error:", err);
-    res.status(500).send("Server Error");
+
+  if (email === FIXED_DOCTOR_EMAIL && password === FIXED_DOCTOR_PASSWORD) {
+    // Store email in localStorage via script and redirect to dashboard
+    res.send(`
+      <script>
+        localStorage.setItem('doctorEmail', '${FIXED_DOCTOR_EMAIL}');
+        window.location.href='/doctor-dashboard.html';
+      </script>
+    `);
+  } else {
+    res.send(`
+      <script>
+        alert('Invalid credentials!');
+        window.location.href='/doctor-login.html';
+      </script>
+    `);
   }
 });
+
 
 // Feedback Submission
 app.post("/submit-feedback", async (req, res) => {
@@ -142,14 +162,21 @@ app.post("/submit-questions", async (req, res) => {
 
 // Get All Consultations
 app.get("/api/consultations", async (req, res) => {
+  const email = req.query.email; // get patient email from query
   try {
-    const consultations = await Consultation.find().sort({ createdAt: -1 });
+    let consultations;
+    if(email){
+      consultations = await Consultation.find({ email }).sort({ createdAt: -1 });
+    } else {
+      consultations = await Consultation.find().sort({ createdAt: -1 });
+    }
     res.json(consultations);
   } catch (err) {
     console.error("❌ Fetch error:", err);
     res.status(500).json({ error: "Server error" });
   }
 });
+
 
 // Doctor Profile API
 app.get("/api/doctor-profile", async (req, res) => {

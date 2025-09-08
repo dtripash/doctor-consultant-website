@@ -1,150 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Doctor Dashboard</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f7f7f7;
-      padding: 20px;
-    }
-    h1 {
-      color: #333;
-      text-align: center;
-    }
-    .profile {
-      background: #fff;
-      border: 1px solid #ccc;
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    #reports {
-      margin-top: 20px;
-    }
-    .report {
-      background: #fff;
-      border: 1px solid #ccc;
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    .form-section {
-      margin-top: 10px;
-    }
-    textarea, input[type="text"] {
-      width: 100%;
-      padding: 8px;
-      font-size: 14px;
-      margin-top: 5px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      resize: vertical;
-    }
-    button {
-      background: #4CAF50;
-      color: white;
-      padding: 8px 12px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      margin-top: 8px;
-    }
-    button:hover {
-      background: #45a049;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Doctor Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<link href="/css/doctor-dashboard.css" rel="stylesheet">
 </head>
 <body>
-  <h1>Doctor Dashboard</h1>
 
-  <!-- Doctor Profile -->
-  <div id="doctorProfile" class="profile">
-    <h2>Doctor Profile</h2>
-    <p><strong>Name:</strong> <span id="doctorName"></span></p>
-    <p><strong>Specialization:</strong> <span id="doctorSpecialization"></span></p>
-    <p><strong>Experience:</strong> <span id="doctorExperience"></span> years</p>
-    <button onclick="logout()" class="logout-btn">Logout</button>
-    <hr>
-  </div>
+<div class="dashboard-container">
+  <!-- Sidebar with profile -->
+  <aside class="sidebar">
+    <div class="profile-card">
+      <div class="profile-avatar">👨‍⚕️</div>
+      <h2 id="doctorName"></h2>
+      <p id="doctorSpecialization"></p>
+      <p><strong>Experience:</strong> <span id="doctorExperience"></span> years</p>
+      <button onclick="logout()" class="logout-btn">Logout</button>
+    </div>
+  </aside>
 
-  <!-- Patient Reports -->
-  <h2>Patient Reports</h2>
-  <div id="reports"></div>
+  <!-- Main content -->
+  <main class="main-content">
+    <h1>Patient Reports</h1>
+    <div id="reports" class="reports-container"></div>
+  </main>
+</div>
 
-  <script>
-    function logout() {
-      localStorage.removeItem("doctorEmail");
-      window.location.href = "doctor-login.html";
+<script>
+// Logout function
+function logout() {
+  localStorage.removeItem("doctorEmail"); // clear login
+  alert("Logged out successfully!");
+  window.location.href = "doctor-login.html";
+}
+// Set profile info dynamically
+const doctorProfile = {
+  name: "Dr. Shalmali R Basangar",
+  specialization: "BHMS, Nutrition [PGDDM]",
+  experience: "10+ years",
+};
+
+document.getElementById("doctorName").textContent = doctorProfile.name;
+document.getElementById("doctorSpecialization").textContent = doctorProfile.specialization;
+document.getElementById("doctorExperience").textContent = doctorProfile.experience;
+
+// Ensure logged in
+const doctorEmail = localStorage.getItem("doctorEmail");
+if(!doctorEmail){
+  alert("You must log in first!");
+  window.location.href = "doctor-login.html";
+}
+
+// Load consultations dynamically
+async function loadReports() {
+  try {
+    const res = await fetch('/api/consultations');
+    const reports = await res.json();
+    const container = document.getElementById("reports");
+    container.innerHTML = "";
+
+    if (!reports.length) {
+      container.innerHTML = "<p>No consultations found.</p>";
+      return;
     }
-    // Check if doctor is logged in
-    const doctorEmail = localStorage.getItem("doctorEmail");
-    if (!doctorEmail) {
-      alert("You must log in first!");
-      window.location.href = "/doctor-login.html";
-    }
 
-    // Show success message after redirect
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('feedbackSuccess') === 'true') {
-      alert(" Feedback submitted successfully!");
-      history.replaceState({}, document.title, window.location.pathname);
-    }
+    reports.forEach(report => {
+      const div = document.createElement("div");
+      div.classList.add("report-card");
+      div.innerHTML = `
+        <p><strong>Patient Email:</strong> ${report.email}</p>
+        <p><strong>Problem Type:</strong> ${report.problemType}</p>
+        <p><strong>Duration:</strong> ${report.duration}</p>
+        <p><strong>Pain:</strong> ${report.pain}</p>
+        <p><strong>Consulted:</strong> ${report.consulted}</p>
+        <p><strong>Feedback:</strong> <span class="feedback-text">${report.feedback || "Pending"}</span></p>
+      `;
 
-    // Fetch Doctor Profile
-    fetch(`/api/doctor-profile?email=${encodeURIComponent(doctorEmail)}`)
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById("doctorName").textContent = data.name || "N/A";
-        document.getElementById("doctorSpecialization").textContent = data.specialization || "N/A";
-        document.getElementById("doctorExperience").textContent = data.experience || "N/A";
-      })
-      .catch(err => console.error("Profile fetch error:", err));
+      if(report.feedback === 'Pending'){
+        const form = document.createElement("form");
+        form.classList.add("feedback-form");
+        form.innerHTML = `
+          <input type="hidden" name="reportId" value="${report._id}">
+          <label>Feedback:</label>
+          <textarea name="feedback" required></textarea>
+          <button type="submit">Submit Feedback</button>
+        `;
+        form.addEventListener('submit', async e => {
+          e.preventDefault();
+          const feedback = form.feedback.value.trim();
+          if(!feedback) return;
 
-    // Fetch Patient Reports for this doctor only
-    fetch(`/api/consultations?doctorEmail=${encodeURIComponent(doctorEmail)}`)
-      .then(res => res.json())
-      .then(reports => {
-        const container = document.getElementById("reports");
-        container.innerHTML = "";
-        reports.forEach(report => {
-          const div = document.createElement("div");
-          div.classList.add("report");
+          await fetch('/submit-feedback', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ reportId: report._id, feedback })
+          });
 
-          div.innerHTML = `
-            <p><strong>Email:</strong> ${report.email}</p>
-            <p><strong>Problem Type:</strong> ${report.problemType}</p>
-            <p><strong>Feedback:</strong> ${report.feedback}</p>
-            <p><strong>Prescription:</strong> ${report.prescription}</p>
-          `;
-
-          // Show feedback form ONLY if feedback is pending
-          if (report.feedback === "Pending") {
-            const form = document.createElement("form");
-            form.method = "POST";
-            form.action = "/submit-feedback";
-            form.classList.add("form-section");
-
-            form.innerHTML = `
-              <input type="hidden" name="reportId" value="${report._id}">
-              <label>Feedback:</label>
-              <textarea name="feedback" required></textarea>
-              <label>Prescription:</label>
-              <input type="text" name="prescription" required>
-              <button type="submit">Submit Feedback</button>
-            `;
-
-            div.appendChild(form);
-          }
-
-          container.appendChild(div);
+          div.querySelector(".feedback-text").textContent = feedback;
+          form.remove();
         });
-      })
-      .catch(err => console.error("Reports fetch error:", err));
-  </script>
+        div.appendChild(form);
+      }
+
+      container.appendChild(div);
+    });
+
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+loadReports();
+setInterval(loadReports, 30000); // refresh every 30s
+
+</script>
+
 </body>
 </html>

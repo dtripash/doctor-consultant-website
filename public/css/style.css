@@ -1,14 +1,8 @@
-/* General Reset */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-/* Body */
+/* General Container */
 body {
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Poppins', sans-serif;
   background: linear-gradient(to right, #e0f7fa, #ffffff);
+  margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -16,24 +10,23 @@ body {
   color: #2c3e50;
 }
 
-/* Container */
 .container {
   text-align: center;
   background: #fff;
-  padding: 50px;
-  border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  max-width: 450px;
+  padding: 40px;
+  border-radius: 20px;
+  max-width: 700px;
   width: 90%;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.1);
   animation: fadeIn 1s ease-in-out;
 }
 
-/* Highlight text */
+/* Highlight */
 .highlight {
   color: #0077cc;
 }
 
-/* Headings */
+/* Sections */
 h1 {
   font-size: 2rem;
   margin-bottom: 10px;
@@ -41,8 +34,41 @@ h1 {
 
 p {
   font-size: 1.1rem;
-  margin-bottom: 30px;
   color: #555;
+  margin-bottom: 30px;
+}
+
+h2 {
+  font-size: 1.5rem;
+  color: #0077cc;
+  margin-bottom: 20px;
+}
+
+.doctor-info {
+  background: #f0f8ff;
+  padding: 20px;
+  border-radius: 15px;
+  margin: 0 auto 20px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+}
+
+.doctor-info h3 {
+  margin-bottom: 10px;
+  color: #27ae60;
+}
+
+/* Features */
+.features-list {
+  list-style: none;
+  padding-left: 0;
+  text-align: left;
+  max-width: 500px;
+  margin: 0 auto 30px;
+}
+
+.features-list li {
+  margin: 8px 0;
+  font-size: 1.05rem;
 }
 
 /* Buttons */
@@ -54,56 +80,36 @@ p {
 }
 
 .btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 20px;
-  background-color: #0077cc;
+  padding: 14px 22px;
+  background: linear-gradient(135deg, #0077cc, #005fa3);
   color: white;
   text-decoration: none;
-  border-radius: 8px;
-  font-weight: bold;
-  transition: background 0.3s;
+  border-radius: 12px;
+  font-weight: 600;
+  transition: all 0.3s ease;
 }
 
 .btn:hover {
-  background-color: #005fa3;
+  background: linear-gradient(135deg, #005fa3, #003f6b);
 }
 
 .doctor-btn {
-  background-color: #27ae60;
+  background: linear-gradient(135deg, #27ae60, #1e8449);
 }
 
 .doctor-btn:hover {
-  background-color: #1e8449;
-}
-
-.btn svg {
-  width: 18px;
-  height: 18px;
-  fill: white;
-}
-
-/* Responsive */
-@media (max-width: 480px) {
-  h1 {
-    font-size: 1.6rem;
-  }
-  p {
-    font-size: 1rem;
-  }
-  .buttons {
-    flex-direction: column;
-    gap: 15px;
-  }
-  .btn {
-    width: 100%;
-    justify-content: center;
-  }
+  background: linear-gradient(135deg, #1e8449, #145a32);
 }
 
 /* Animation */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-20px);}
   to { opacity: 1; transform: translateY(0);}
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .buttons {
+    flex-direction: column;
+  }
 }

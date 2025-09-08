@@ -1,198 +1,183 @@
-/* public/css/patient-reports.css */
-
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f4f6f8;
+/* ============================= */
+/* Global Reset & Typography */
+/* ============================= */
+* {
   margin: 0;
-  padding: 40px 20px;
-  color: #2c3e50;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
-}
-
-h2 {
-  font-weight: 700;
-  font-size: 2.2rem;
-  margin-bottom: 30px;
-  color: #34495e;
-  text-align: center;
-}
-
-.dashboard {
-  display: flex;
-  max-width: 900px;
-  width: 100%;
-  gap: 30px;
+  padding: 0;
   box-sizing: border-box;
 }
 
-.reports-section {
-  flex: 3;
-  background: white;
-  padding: 25px 30px;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-  max-height: 75vh;
-  overflow-y: auto;
-}
-
-.report {
-  background: #fafafa;
-  border: 1px solid #ddd;
-  padding: 18px 22px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  transition: box-shadow 0.3s ease;
-}
-
-.report:hover {
-  box-shadow: 0 4px 14px rgba(0,0,0,0.1);
-}
-
-.report-title {
-  font-weight: 700;
-  font-size: 1.2rem;
-  margin-bottom: 6px;
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #f0f4f8;
   color: #2c3e50;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 30px 15px;
 }
 
-.report-date {
-  font-size: 0.9rem;
-  color: #7f8c8d;
-  margin-bottom: 12px;
+/* ============================= */
+/* Dashboard Layout */
+/* ============================= */
+.dashboard-container {
+  display: flex;
+  max-width: 1200px;
+  width: 100%;
+  gap: 30px;
 }
 
-.report-content strong {
-  display: inline-block;
-  width: 130px;
-  color: #34495e;
-}
-
-.report-content {
-  line-height: 1.5;
-  font-size: 1rem;
-  color: #444;
-}
-
-.report-content strong[style*="green"] {
-  color: #27ae60; /* green for feedback */
-}
-
-.report-content strong[style*="blue"] {
-  color: #2980b9; /* blue for prescription */
-}
-
-.controls-section {
+/* ============================= */
+/* Sidebar Profile */
+/* ============================= */
+.sidebar {
   flex: 1;
+}
+
+.profile-card {
+  background: linear-gradient(145deg, #ffffff, #e8f0f5);
+  padding: 25px 20px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
   display: flex;
   flex-direction: column;
   gap: 15px;
-  align-items: center;
-  justify-content: flex-start;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.controls-section .btn,
-.controls-section button {
-  display: block;
-  width: 100%;
-  padding: 14px 0;
+.profile-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+}
+
+.profile-card h2 {
+  font-size: 1.6rem;
+  color: #1f3c88;
+}
+
+.info-item {
+  font-size: 1rem;
+  color: #34495e;
+  line-height: 1.5;
+}
+
+.logout-btn {
+  margin-top: 20px;
+  padding: 12px;
   border-radius: 10px;
-  font-size: 1.1rem;
-  font-weight: 700;
+  background: #e74c3c;
+  color: white;
+  font-weight: 600;
   cursor: pointer;
   border: none;
-  transition: background-color 0.3s ease;
-  text-align: center;
-  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.logout-btn:hover {
+  background: #c0392b;
+  transform: scale(1.05);
+}
+
+/* ============================= */
+/* Main Content & Consultations */
+/* ============================= */
+.main-content {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.main-content h1 {
+  font-size: 2rem;
+  color: #1f3c88;
+  margin-bottom: 10px;
+}
+
+/* Consultations Cards */
+.consultations-container {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.consultation-card {
+  background: white;
+  border-radius: 15px;
+  padding: 20px 25px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.07);
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.consultation-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+}
+
+.consultation-header {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 0.9rem;
+  color: #7f8c8d;
+  margin-bottom: 10px;
+}
+
+.consultation-info strong {
+  display: inline-block;
+  width: 140px;
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+.consultation-info {
+  line-height: 1.6;
+  font-size: 1rem;
+  color: #34495e;
+}
+
+/* ============================= */
+/* New Consultation Button */
+/* ============================= */
+.new-consultation {
+  align-self: flex-start;
+  padding: 12px 25px;
+  background: linear-gradient(90deg, #1f3c88, #2980b9);
   color: white;
+  font-weight: 600;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.3s ease;
 }
 
-.controls-section .btn {
-  background-color: #2980b9; /* nice blue */
+.new-consultation:hover {
+  background: linear-gradient(90deg, #2e4ca0, #1b2f6f);
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
-.controls-section .btn:hover {
-  background-color: #1c5980;
-}
-
-.controls-section button {
-  background-color: #27ae60; /* green */
-}
-
-.controls-section button:hover {
-  background-color: #1f7a43;
-}
-
-/* 📲 Tablet screens */
-@media (max-width: 768px) {
-  .dashboard {
+/* ============================= */
+/* Responsive Design */
+/* ============================= */
+@media (max-width: 1024px) {
+  .dashboard-container {
     flex-direction: column;
   }
-  
-  .controls-section {
-    flex-direction: row;
-    justify-content: center;
-    gap: 15px;
+  .profile-card, .consultation-card {
+    padding: 20px;
   }
-  
-  .controls-section .btn,
-  .controls-section button {
-    width: auto;
-    padding: 12px 25px;
-    font-size: 1rem;
+  .new-consultation {
+    width: 100%;
+    text-align: center;
   }
 }
 
-/* 📱 Small mobiles */
-@media (max-width: 480px) {
-  body {
-    padding: 20px 10px;
-  }
-
-  h2 {
-    font-size: 1.6rem;
-    margin-bottom: 20px;
-  }
-
-  .reports-section {
-    padding: 18px 15px;
-    max-height: none; /* allow full scroll */
-  }
-
-  .report {
-    padding: 14px 16px;
-  }
-
-  .report-title {
-    font-size: 1rem;
-  }
-
-  .report-date {
-    font-size: 0.8rem;
-  }
-
-  .report-content {
-    font-size: 0.9rem;
-  }
-
-  .report-content strong {
-    width: 100%; /* stack labels above */
+@media (max-width: 600px) {
+  .consultation-info strong {
+    width: 100%;
     display: block;
-    margin-bottom: 4px;
+    margin-bottom: 5px;
   }
-
-  .controls-section {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .controls-section .btn,
-  .controls-section button {
-    width: 100%;
-    font-size: 1rem;
-    padding: 12px 0;
+  .dashboard-container {
+    padding: 15px;
   }
 }

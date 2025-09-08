@@ -1,54 +1,84 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Patient Reports</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Patient Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/patient-reports.css">
 </head>
 <body>
-  <h2>Your Reports</h2>
-  <div class="dashboard">
-    <div class="reports-section" id="reports-container">
-      <!-- Reports will appear here -->
-    </div>
 
-    <div class="controls-section">
-      <a class="btn" href="questionnaire.html">New Consultation</a>
-      <button onclick="logout()">Logout</button>
+<div class="dashboard-container">
+
+  <!-- Sidebar: Patient Info -->
+  <aside class="sidebar">
+    <div class="profile-card">
+      <h2 id="patient-profile">Patient Profile</h2>
+      <div class="info-item"><strong>Email:</strong> <span id="patientEmail"></span></div>
+      <div class="info-item"><strong>Age:</strong> <span id="patientAge"></span></div>
+      <div class="info-item"><strong>Gender:</strong> <span id="patientGender"></span></div>
+      <button class="logout-btn" onclick="logout()">Logout</button>
     </div>
-  </div>
+  </aside>
+
+  <!-- Main content: Consultations -->
+  <main class="main-content">
+    <h1 id="patient-consultations">Patient's Consultations</h1>
+    <div id="consultations" class="consultations-container"></div>
+    <a href="questionnaire.html" class="btn new-consultation">📝 New Consultation</a>
+  </main>
+
+</div>
 
 <script>
-  const container = document.getElementById('reports-container');
-  const email = localStorage.getItem("patientEmail");
+  // Load patient info from localStorage
+  const patientName = localStorage.getItem("patientName") || "Patient";
+  const patientEmail = localStorage.getItem("patientEmail");
+  const patientAge = localStorage.getItem("patientAge") || "-";
+  const patientGender = localStorage.getItem("patientGender") || "-";
+  // document.getElementById("dashboardTitle").textContent = `${patientName}'s Consultations`;
+  document.getElementById("patient-profile").textContent = `${patientName}'s`;
+  document.getElementById("patient-consultations").textContent = `${patientName}'s Consultations`;
 
+  if(!patientEmail){
+    alert("You must log in first!");
+    window.location.href = "patient-login.html";
+  }
+
+  // document.getElementById("patientName").textContent = patientName;
+  document.getElementById("patientEmail").textContent = patientEmail;
+  document.getElementById("patientAge").textContent = patientAge;
+  document.getElementById("patientGender").textContent = patientGender;
+
+  const container = document.getElementById("consultations");
+
+  // Fetch all consultations and filter only for this patient
   fetch(`/api/consultations`)
     .then(res => res.json())
-    .then(consultations => {
-      // Filter consultations for the logged-in patient only
-      const myReports = consultations.filter(c => c.email === email);
+    .then(all => {
+      const myConsultations = all.filter(c => c.email === patientEmail);
 
-      if (myReports.length === 0) {
-        container.innerHTML = "<p>No consultations found.</p>";
+      if(myConsultations.length === 0){
+        container.innerHTML = "<p>No consultations yet.</p>";
         return;
       }
 
-      myReports.forEach(c => {
+      myConsultations.forEach(c => {
         const date = new Date(c.createdAt).toLocaleDateString();
-        const div = document.createElement('div');
-        div.classList.add('report');
+        const div = document.createElement("div");
+        div.classList.add("consultation-card");
         div.innerHTML = `
-          <div class="report-title">Consultation</div>
-          <div class="report-date">Date: ${date}</div>
-          <div class="report-content">
-            <strong>Problem:</strong> ${c.problemType || "N/A"} <br>
-            <strong>Duration:</strong> ${c.duration} <br>
-            <strong>Pain:</strong> ${c.pain} <br>
-            <strong>Consulted:</strong> ${c.consulted} <br>
-            <strong>Email:</strong> ${c.email} <br><br>
-            <strong style="color:green;">Doctor's Feedback:</strong> ${c.feedback || "Pending"} <br>
-            <strong style="color:blue;">Prescription:</strong> ${c.prescription || "Not Given"}
+          <div class="consultation-header">
+            <span class="consultation-date">${date}</span>
           </div>
-          <hr>
+          <div class="consultation-info">
+            <strong>Problem:</strong> ${c.problemType || "N/A"} <br>
+            <strong>Duration:</strong> ${c.duration || "N/A"} <br>
+            <strong>Pain:</strong> ${c.pain || "N/A"} <br>
+            <strong>Consulted:</strong> ${c.consulted || "N/A"} <br>
+            <strong>Feedback:</strong> ${c.feedback || "Pending"} <br>
+          </div>
         `;
         container.appendChild(div);
       });
@@ -57,10 +87,11 @@
       container.innerHTML = "<p>Error loading consultations.</p>";
       console.error(err);
     });
-    function logout() {
+
+  function logout(){
     localStorage.clear();
     alert("Logged out!");
-    location.href = "patient-login.html";
+    window.location.href = "patient-login.html";
   }
 </script>
 

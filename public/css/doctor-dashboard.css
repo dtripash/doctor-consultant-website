@@ -1,138 +1,161 @@
+/* General */
 body {
   font-family: 'Poppins', sans-serif;
   background-color: #eef6f9;
   margin: 0;
-  padding: 0;
-  text-align: center;
-}
-
-h2 {
-  color: #2c3e50;
-  margin-top: 40px;
-}
-
-h1 {
   color: #333;
+}
+
+/* Dashboard Layout */
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 280px;
+  background: linear-gradient(180deg, #4facfe 0%, #00f2fe 100%);
+  color: white;
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.profile-card {
   text-align: center;
-}
-
-.profile, .report {
-  background: #fff;
-  border: 1px solid #ccc;
-  padding: 15px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-#reports {
-  margin-top: 20px;
-}
-
-.form-section {
-  margin-top: 10px;
-}
-
-textarea, input[type="text"] {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 15px;
   width: 100%;
-  padding: 8px;
-  font-size: 14px;
-  margin-top: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  resize: vertical;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
 }
 
-button {
+.profile-card:hover {
+  transform: translateY(-5px);
+}
+
+.profile-avatar {
+  font-size: 60px;
+  margin-bottom: 10px;
+}
+
+.profile-card h2 {
+  font-size: 20px;
+  margin: 5px 0;
+}
+
+.profile-card p {
+  font-size: 14px;
+  margin: 2px 0;
+}
+
+.logout-btn {
+  margin-top: 15px;
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  width: 100%;
+  transition: 0.3s;
+}
+
+.logout-btn:hover {
+  background-color: #ff3b3b;
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  padding: 40px;
+  background-color: #f7f9fb;
+}
+
+.main-content h1 {
+  font-size: 28px;
+  margin-bottom: 25px;
+}
+
+/* Reports */
+.reports-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.report-card {
+  background-color: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.report-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+}
+
+.feedback-form {
+  margin-top: 15px;
+}
+
+.feedback-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  resize: vertical;
+  transition: 0.2s;
+}
+
+.feedback-form textarea:focus {
+  border-color: #0077cc;
+  outline: none;
+}
+
+.feedback-form button {
+  margin-top: 10px;
   background-color: #0077cc;
   color: white;
   border: none;
-  padding: 12px 20px;
-  margin: 10px;
-  border-radius: 6px;
+  padding: 10px 20px;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
+  font-weight: 600;
+  transition: 0.3s;
 }
 
-button:hover {
+.feedback-form button:hover {
   background-color: #005fa3;
 }
 
-.dashboard {
-  margin: 40px auto;
-  background-color: #ffffff;
-  padding: 30px 50px;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  max-width: 800px;
-}
-
-.dashboard p {
-  font-size: 18px;
-  color: #333;
-  margin-bottom: 20px;
-}
-
-/* 🔹 Responsive Design */
-@media (max-width: 1024px) {
-  .dashboard {
-    padding: 20px 30px;
-    max-width: 90%;
-  }
-
-  button {
-    padding: 10px 18px;
-    font-size: 15px;
-  }
-}
-
+/* Responsive */
 @media (max-width: 768px) {
-  .dashboard {
-    padding: 20px;
-    margin: 20px auto;
+  .dashboard-container {
+    flex-direction: column;
   }
-
-  h1, h2 {
-    font-size: 22px;
-  }
-
-  .dashboard p {
-    font-size: 16px;
-  }
-
-  button {
+  
+  .sidebar {
     width: 100%;
-    margin: 8px 0;
-    font-size: 14px;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 20px;
   }
 
-  textarea, input[type="text"] {
-    font-size: 13px;
-  }
-}
-
-@media (max-width: 480px) {
-  .dashboard {
-    padding: 15px;
-    border-radius: 8px;
+  .profile-card {
+    width: auto;
   }
 
-  h1, h2 {
-    font-size: 20px;
-  }
-
-  .dashboard p {
-    font-size: 14px;
-  }
-
-  button {
-    font-size: 13px;
-    padding: 10px;
-  }
-
-  textarea, input[type="text"] {
-    font-size: 12px;
-    padding: 6px;
+  .main-content {
+    padding: 20px;
   }
 }
