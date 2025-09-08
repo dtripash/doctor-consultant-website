@@ -122,34 +122,80 @@ p.register a:hover {
 
 
 /* 🔽 Responsive design for small screens */
+/* 🔽 Responsive design for tablets */
+@media (max-width: 1024px) {
+  body {
+    padding: 15px;
+  }
+
+  h2 {
+    font-size: 1.9rem;
+  }
+
+  form {
+    padding: 35px 25px;
+    max-width: 380px;
+  }
+
+  button {
+    font-size: 1.1rem;
+    padding: 13px 0;
+  }
+}
+
+/* 🔽 Responsive design for mid-size tablets/large phones */
+@media (max-width: 768px) {
+  h2 {
+    font-size: 1.7rem;
+  }
+
+  form {
+    padding: 30px 22px;
+    max-width: 350px;
+  }
+
+  input[type="email"],
+  input[type="password"] {
+    font-size: 0.95rem;
+    padding: 11px 12px;
+  }
+
+  button {
+    font-size: 1.05rem;
+    padding: 12px 0;
+  }
+}
+
+/* 🔽 Responsive design for small phones */
 @media (max-width: 480px) {
   body {
     padding: 10px;
   }
 
   h2 {
-    font-size: 1.8rem;
-    margin-bottom: 25px;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
   }
 
   form {
-    padding: 25px 20px;
+    padding: 22px 18px;
     border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    max-width: 100%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
   }
 
   input[type="email"],
   input[type="password"] {
-    padding: 10px 12px;
-    font-size: 0.95rem;
+    padding: 9px 10px;
+    font-size: 0.9rem;
   }
 
   button {
-    padding: 12px 0;
-    font-size: 1rem;
+    font-size: 0.95rem;
+    padding: 11px 0;
   }
 
   p.register {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
 }

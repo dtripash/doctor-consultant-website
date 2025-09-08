@@ -10,6 +10,7 @@ body {
 .dashboard-container {
   display: flex;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 /* Sidebar */
@@ -21,50 +22,57 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 15px;
+  gap: 18px;
+  box-shadow: 4px 0 15px rgba(0,0,0,0.08);
+  border-radius: 0 20px 20px 0;
 }
 
 .profile-card {
   text-align: center;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 20px;
-  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 22px 18px;
+  border-radius: 18px;
   width: 100%;
-  backdrop-filter: blur(5px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  transition: transform 0.2s;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+  transition: transform 0.25s, box-shadow 0.25s;
 }
 
 .profile-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-6px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.18);
 }
 
 .profile-avatar {
-  font-size: 60px;
-  margin-bottom: 10px;
+  font-size: 64px;
+  margin-bottom: 12px;
 }
 
 .profile-card h2 {
   font-size: 20px;
-  margin: 5px 0;
+  margin: 6px 0;
+  font-weight: 600;
 }
 
 .profile-card p {
   font-size: 14px;
-  margin: 2px 0;
+  margin: 3px 0;
+  opacity: 0.9;
 }
 
 .logout-btn {
-  margin-top: 15px;
+  margin-top: 18px;
   background-color: #ff6b6b;
   color: white;
   border: none;
-  padding: 10px 20px;
+  padding: 12px 22px;
   border-radius: 12px;
   cursor: pointer;
   font-weight: 600;
   width: 100%;
   transition: 0.3s;
+  font-size: 1rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.12);
 }
 
 .logout-btn:hover {
@@ -76,62 +84,71 @@ body {
   flex: 1;
   padding: 40px;
   background-color: #f7f9fb;
+  border-radius: 20px 0 0 20px;
 }
 
 .main-content h1 {
   font-size: 28px;
-  margin-bottom: 25px;
+  margin-bottom: 28px;
+  font-weight: 700;
+  color: #2c3e50;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.05);
 }
 
 /* Reports */
 .reports-container {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 22px;
 }
 
 .report-card {
   background-color: white;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
-  transition: transform 0.2s, box-shadow 0.2s;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  transition: transform 0.25s, box-shadow 0.25s;
+  border-left: 5px solid #0077cc;
 }
 
 .report-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.12);
 }
 
+/* Feedback */
 .feedback-form {
-  margin-top: 15px;
+  margin-top: 18px;
 }
 
 .feedback-form textarea {
   width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+  padding: 12px;
+  margin-top: 6px;
+  border-radius: 10px;
+  border: 1.5px solid #ccc;
   resize: vertical;
-  transition: 0.2s;
+  font-size: 0.95rem;
+  transition: 0.25s;
 }
 
 .feedback-form textarea:focus {
   border-color: #0077cc;
   outline: none;
+  box-shadow: 0 0 8px rgba(0,119,204,0.15);
 }
 
 .feedback-form button {
-  margin-top: 10px;
+  margin-top: 12px;
   background-color: #0077cc;
   color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
+  padding: 12px 20px;
+  border-radius: 10px;
   cursor: pointer;
   font-weight: 600;
   transition: 0.3s;
+  font-size: 0.95rem;
 }
 
 .feedback-form button:hover {
@@ -139,23 +156,71 @@ body {
 }
 
 /* Responsive */
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 240px;
+    padding: 25px 18px;
+  }
+
+  .main-content {
+    padding: 30px;
+  }
+}
+
 @media (max-width: 768px) {
   .dashboard-container {
     flex-direction: column;
   }
-  
+
   .sidebar {
     width: 100%;
     flex-direction: row;
     justify-content: space-around;
-    padding: 20px;
+    padding: 18px;
+    border-radius: 0 0 20px 20px;
   }
 
   .profile-card {
     width: auto;
+    padding: 15px;
   }
 
   .main-content {
     padding: 20px;
+    border-radius: 0;
+  }
+
+  .main-content h1 {
+    font-size: 24px;
+  }
+
+  .report-card {
+    padding: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .profile-card {
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  .logout-btn {
+    padding: 10px 18px;
+    font-size: 0.9rem;
+  }
+
+  .main-content h1 {
+    font-size: 20px;
+  }
+
+  .report-card {
+    padding: 16px;
   }
 }
