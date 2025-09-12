@@ -10,9 +10,9 @@ const PORT = 3000;
 
 // MongoDB Connection with clear error logging
 mongoose.connect("mongodb://127.0.0.1:27017/amitdb")
-  .then(() => console.log("✅ Connected to MongoDB"))
+  .then(() => console.log("Connected to MongoDB"))
   .catch(err => {
-    console.error("❌ MongoDB connection failed. Is MongoDB running?");
+    console.error("MongoDB connection failed. Is MongoDB running?");
     console.error("Error:", err.message);
     process.exit(1); // Stop the server if DB is not connected
   });
@@ -48,7 +48,7 @@ app.post("/patient-register", async (req, res) => {
 
     const patient = new Patient({ name, email, password, age, gender });
     await patient.save();
-    console.log("✅ Patient Saved:", patient);
+    // console.log("Patient Saved:", patient);
     res.redirect("/questionnaire.html");
   } catch (err) {
     console.error("❌ Registration error:", err);
@@ -69,7 +69,7 @@ app.post("/patient-login", async (req, res) => {
         </script>
       `);
     }
-    console.log("✅ Patient Logged In:", patient);
+    console.log("Patient Logged In:", patient);
     res.send(`
   <script>
     localStorage.setItem('patientName', '${patient.name}');
@@ -81,7 +81,7 @@ app.post("/patient-login", async (req, res) => {
   `);
 
   } catch (err) {
-    console.error("❌ Login error:", err);
+    console.error("Login error:", err);
     res.status(500).send("Server Error");
   }
 });
@@ -95,7 +95,7 @@ app.post("/doctor-register", async (req, res) => {
     if (exists) return res.send("⚠️ Doctor already registered.");
     const doctor = new Doctor({ name, email, password, specialization, experience });
     await doctor.save();
-    console.log("✅ Doctor Registered:", doctor);
+    // console.log("Doctor Registered:", doctor);
     res.send(`<script>
       localStorage.setItem('doctorEmail', '${email}');
       window.location.href = '/doctor-dashboard.html';
@@ -138,10 +138,10 @@ app.post("/submit-feedback", async (req, res) => {
   const { reportId, feedback, prescription } = req.body;
   try {
     await Consultation.findByIdAndUpdate(reportId, { feedback, prescription });
-    console.log(`✅ Feedback submitted for report ${reportId}`);
+    // console.log(`Feedback submitted for report ${reportId}`);
     res.redirect("/doctor-dashboard.html");
   } catch (err) {
-    console.error("❌ Feedback submission error:", err);
+    console.error("Feedback submission error:", err);
     res.status(500).send("Error saving feedback.");
   }
 });
@@ -152,7 +152,7 @@ app.post("/submit-questions", async (req, res) => {
   try {
     const consultation = new Consultation({ email, duration, pain, consulted, problemType });
     await consultation.save();
-    console.log("✅ Consultation saved:", consultation);
+    // console.log("Consultation saved:", consultation);
     res.redirect("/response.html");
   } catch (err) {
     console.error("❌ Save error:", err);
