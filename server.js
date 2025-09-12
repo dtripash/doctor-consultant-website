@@ -4,12 +4,12 @@ const mongoose = require("mongoose");
 const Patient = require("./models/Patient");
 const Doctor = require("./models/Doctor");
 const Consultation = require("./models/Consultation");
-
+require("dotenv").config();
 const app = express();
 const PORT = 3000;
 
 // MongoDB Connection with clear error logging
-mongoose.connect("mongodb://127.0.0.1:27017/amitdb")
+mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("Connected to MongoDB"))
   .catch(err => {
     console.error("MongoDB connection failed. Is MongoDB running?");
@@ -69,7 +69,7 @@ app.post("/patient-login", async (req, res) => {
         </script>
       `);
     }
-    console.log("Patient Logged In:", patient);
+    // console.log("Patient Logged In:", patient);
     res.send(`
   <script>
     localStorage.setItem('patientName', '${patient.name}');
