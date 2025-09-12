@@ -44,7 +44,12 @@ app.post("/patient-register", async (req, res) => {
   const { name, email, password, age, gender } = req.body;
   try {
     const exists = await Patient.findOne({ email });
-    if (exists) return res.send("⚠️ Email already registered.");
+    if (exists) return res.send(`
+    <script>
+      alert("⚠️ Email already registered.");
+      window.location.href = "/patient-register.html";
+    </script>
+  `);
 
     const patient = new Patient({ name, email, password, age, gender });
     await patient.save();
